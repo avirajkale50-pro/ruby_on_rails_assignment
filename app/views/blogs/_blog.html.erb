@@ -5,6 +5,11 @@
   </p>
 
   <p>
+    <strong>Author:</strong>
+    <%= blog.user ? blog.user.email : 'Unknown' %>
+  </p>
+
+  <p>
     <strong>Body:</strong>
     <%= blog.body %>
   </p>

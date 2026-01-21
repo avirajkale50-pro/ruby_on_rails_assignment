@@ -1,17 +1,29 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_blog
 
   def index
     @comments = @blog.comments
+    
+    respond_to do |format|
+      format.html
+      format.json { render json: CommentBlueprint.render(@comments) }
+    end
   end
 
   def create
     @comment = @blog.comments.build(comment_params)
+    @comment.user = current_user
 
-    if @comment.save
-      redirect_to @blog, notice: "Comment added"
-    else
-      redirect_to @blog, alert: @comment.errors.full_messages.join(", ")
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to @blog, notice: "Comment added" }
+        format.json { render json: CommentBlueprint.render(@comment), status: :created }
+      else
+        format.html { redirect_to @blog, alert: @comment.errors.full_messages.join(", ") }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
     end
   end
 

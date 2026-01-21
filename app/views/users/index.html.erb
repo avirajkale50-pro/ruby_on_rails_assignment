@@ -1,0 +1,15 @@
+<h1>Users</h1>
+
+<%= link_to "New User", new_user_path, class: "btn" %>
+
+<div class="users-list">
+  <% @users.each do |user| %>
+    <div class="user-card">
+      <p><strong>Email:</strong> <%= user.email %></p>
+      <div class="actions">
+        <%= link_to "Show", user_path(user) %>
+        <%= link_to "Edit", edit_user_path(user) %>
+      </div>
+    </div>
+  <% end %>
+</div>

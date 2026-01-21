@@ -1,0 +1,23 @@
+<div class="blog-card">
+  <h2><%= link_to blog.title, blog %></h2>
+  <p><%= truncate(blog.body, length: 200) %></p>
+  
+  <div class="blog-meta">
+    <span class="author">By <%= blog.user.email %></span>
+    <span class="status <%= blog.published? ? 'published' : 'unpublished' %>">
+      <%= blog.published? ? '✓ Published' : '✗ Unpublished' %>
+    </span>
+    <span class="date">
+      Created <%= time_ago_in_words(blog.created_at) %> ago
+    </span>
+  </div>
+  
+  <div class="blog-actions">
+    <%= link_to "View", blog, class: "btn btn-sm" %>
+    <%= link_to "Edit", edit_blog_path(blog), class: "btn btn-sm" %>
+    <%= button_to blog.published? ? "Unpublish" : "Publish", 
+                  publish_blog_path(blog), 
+                  method: :patch, 
+                  class: "btn btn-sm" %>
+  </div>
+</div>

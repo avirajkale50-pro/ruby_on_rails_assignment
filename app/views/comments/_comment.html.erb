@@ -1,0 +1,12 @@
+<div class="comment" id="comment_<%= comment.id %>">
+  <div class="comment-body">
+    <%= simple_format(comment.body) %>
+  </div>
+  <div class="comment-meta">
+    <small>By <%= comment.user.email %> | Posted <%= time_ago_in_words(comment.created_at) %> ago</small>
+    <%= link_to "Delete", blog_comment_path(comment.blog, comment), 
+                method: :delete, 
+                data: { confirm: "Are you sure?" },
+                class: "delete-link" %>
+  </div>
+</div>

@@ -2,13 +2,21 @@
 
 <h1>Blogs</h1>
 
+<!-- Navigation for filtering -->
+<div class="blog-filters">
+  <%= link_to "All Blogs", blogs_path, class: "filter-link" %>
+  <%= link_to "Published", published_blogs_path, class: "filter-link" %>
+  <%= link_to "Unpublished", unpublished_blogs_path, class: "filter-link" %>
+</div>
+
 <div id="blogs">
-  <% @blogs.each do |blog| %>
-    <%= render blog %>
-    <p>
-      <%= link_to "Show this blog", blog %>
-    </p>
+  <% if @blogs.any? %>
+    <% @blogs.each do |blog| %>
+      <%= render partial: "blogs/blog_card", locals: { blog: blog } %>
+    <% end %>
+  <% else %>
+    <p class="no-blogs">No blogs found.</p>
   <% end %>
 </div>
 
-<%= link_to "New blog", new_blog_path %>
+<%= link_to "New blog", new_blog_path, class: "btn btn-primary" %>

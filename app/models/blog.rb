@@ -1,5 +1,8 @@
 class Blog < ApplicationRecord
+  belongs_to :user
   has_many :comments, dependent: :destroy
+  
+  validates :user, presence: true
 
   scope :published, -> { where(published: true) }
   scope :unpublished, -> { where(published: false) }

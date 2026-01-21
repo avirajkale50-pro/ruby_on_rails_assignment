@@ -1,0 +1,20 @@
+-# HAML version of blog card partial
+-# Demonstrates partials with locals in HAML
+
+.blog-card
+  %h2
+    = link_to blog.title, blog
+  %p= truncate(blog.body, length: 200)
+  
+  .blog-meta
+    %span.status{class: blog.published? ? 'published' : 'unpublished'}
+      = blog.published? ? '✓ Published' : '✗ Unpublished'
+    %span.date
+      Created
+      = time_ago_in_words(blog.created_at)
+      ago
+  
+  .blog-actions
+    = link_to "View", blog, class: "btn btn-sm"
+    = link_to "Edit", edit_blog_path(blog), class: "btn btn-sm"
+    = button_to blog.published? ? "Unpublish" : "Publish", publish_blog_path(blog), method: :patch, class: "btn btn-sm"

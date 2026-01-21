@@ -8,3 +8,18 @@
 
   <%= button_to "Destroy this blog", @blog, method: :delete %>
 </div>
+
+<hr>
+
+<!-- Comments Section -->
+<%= render partial: "comments/list", locals: { comments: @blog.comments } %>
+
+<hr>
+
+<!-- Comment Form (only show if blog is published) -->
+<% if @blog.published? %>
+  <h3>Leave a Comment</h3>
+  <%= render partial: "comments/form", locals: { blog: @blog, comment: @blog.comments.build } %>
+<% else %>
+  <p><em>Comments are disabled for unpublished blogs.</em></p>
+<% end %>

@@ -1,0 +1,19 @@
+-# HAML version of the comment form
+-# This demonstrates HAML syntax as an alternative to ERB
+
+= form_with(model: [blog, comment], local: true, class: "comment-form") do |form|
+  - if comment.errors.any?
+    .error-messages
+      %h3
+        = pluralize(comment.errors.count, "error")
+        prohibited this comment from being saved:
+      %ul
+        - comment.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = form.label :body, "Add a comment:"
+    = form.text_area :body, rows: 4, placeholder: "Write your comment here...", required: true
+
+  .actions
+    = form.submit "Post Comment", class: "btn btn-primary"
