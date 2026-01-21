@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: %i[ show edit update destroy ]
+  before_action :set_blog, only: %i[ show edit update destroy publish ]
 
   # GET /blogs or /blogs.json
   def index
@@ -44,6 +44,17 @@ class BlogsController < ApplicationController
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @blog.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # PATCH /blogs/1/publish
+  def publish
+    @blog.update(published: !@blog.published)
+    
+    respond_to do |format|
+      status_text = @blog.published? ? "published" : "unpublished"
+      format.html { redirect_to @blog, notice: "Blog was successfully #{status_text}.", status: :see_other }
+      format.json { render :show, status: :ok, location: @blog }
     end
   end
 

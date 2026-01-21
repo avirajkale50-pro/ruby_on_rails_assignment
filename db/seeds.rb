@@ -7,3 +7,25 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Comment.destroy_all
+Blog.destroy_all
+
+10.times do |i|
+  blog = Blog.create!(
+    title: "Published Blog #{i}",
+    body: "Content #{i}",
+    published: true
+  )
+
+  2.times do
+    blog.comments.create!(body: "Comment on published blog")
+  end
+end
+
+10.times do |i|
+  Blog.create!(
+    title: "Draft Blog #{i}",
+    body: "Content #{i}",
+    published: false
+  )
+end
